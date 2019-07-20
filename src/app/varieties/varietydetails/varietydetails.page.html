@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar translucent="true">
+    <ion-buttons>
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-img #img [src]="'http://arex.bespoke.com.my:90' + detail?.farmProduce.photoUrl"></ion-img>
+</ion-header>
+<ion-content>
+  <ion-grid fixed>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="8" class="ion-text-left">
+        <ion-label class="name-title">
+          <h2>
+            {{ detail?.name }}
+          </h2>
+        </ion-label>
+      </ion-col>
+      <ion-col size="4" class="ion-text-right">
+        <ion-button (click)="onClick()" fill="clear" color="primary">
+          <ion-icon slot="icon-only" name="star"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="removeMore()" fill="clear">
+        <ion-icon slot="icon-only" name="remove"></ion-icon>
+      </ion-button>
+      <ion-label>{{ quantity }} {{ detail?.unit }}</ion-label>
+      <ion-button (click)="addMore()" fill="clear">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="addToCart()" fill="clear">
+        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

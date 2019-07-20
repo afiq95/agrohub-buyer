@@ -1,24 +1,34 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Platform } from "@ionic/angular";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html'
+  selector: "app-root",
+  templateUrl: "app.component.html"
 })
 export class AppComponent {
   public appPages = [
     {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
+      title: "Utama",
+      url: "/home",
+      icon: "home"
     },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
+      title: "Mesej",
+      url: "/chat",
+      icon: "paper-plane"
+    },
+    {
+      title: "Notifikasi",
+      url: "/notification",
+      icon: "information-circle"
+    },
+    {
+      title: "Akaun",
+      url: "/profile",
+      icon: "contact"
     }
   ];
 
