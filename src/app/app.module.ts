@@ -11,6 +11,8 @@ import { AppRoutingModule } from "./app-routing.module";
 import { IonicStorageModule } from "@ionic/storage";
 import { LocalStorageProviderService } from "./providers/local-storage-provider.service";
 import { ApiProviderService } from "./providers/api-provider.service";
+import { SearchResultPageModule } from "./popovers/search-result/search-result.module";
+import { AuthGuardService } from "./providers/auth-guard.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,14 +26,16 @@ import { ApiProviderService } from "./providers/api-provider.service";
     IonicStorageModule.forRoot({
       name: "__mydb",
       driverOrder: ["indexeddb", "sqlite", "websql"]
-    })
+    }),
+    SearchResultPageModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     LocalStorageProviderService,
-    ApiProviderService
+    ApiProviderService,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })

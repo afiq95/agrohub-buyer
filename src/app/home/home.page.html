@@ -14,11 +14,7 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar
-      placeholder="Carian"
-      (ionChange)="onSearchChange($event)"
-      [debounce]="250"
-    ></ion-searchbar>
+    <ion-searchbar placeholder="Carian" (click)="goSearch()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -32,19 +28,28 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col class="ion-no-padding ion-padding-start" size="12">
+      <ion-col class="ion-no-padding ion-padding-horizontal" size="12">
         <ion-text color="dark">
-          <h5 class="ion-no-margin">Pesanan Baru</h5>
+          <h5 class="ion-no-margin">
+            Pesanan Baru
+            <span
+              class="ion-float-right"
+              routerDirection="forward"
+              routerLink="/orders-list"
+              style="font-size:15px;color:#64a1f4"
+              >Lihat Semua ></span
+            >
+          </h5>
         </ion-text>
       </ion-col>
-      <ion-col size="12" *ngIf="belian.length < 1">
+      <ion-col size="12" *ngIf="belian.length < 1 && belianInit == null">
         <ion-card color="white">
           <ion-card-content>
             Tiada Pesanan Baru
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="12" *ngIf="belian.length > 0">
+      <ion-col size="12" *ngIf="belianInit != null">
         <ion-card color="white" (click)="openOrderDetail(belianInit)">
           <ion-list>
             <ion-item lines="none" detail="true">
@@ -57,7 +62,7 @@
             </ion-item>
           </ion-list>
         </ion-card>
-        <div *ngIf="beliOpen">
+        <div *ngIf="beliOpen && belian.length > 0">
           <ion-card
             class="animated fadeIn"
             color="white"
@@ -76,48 +81,28 @@
         </div>
       </ion-col>
       <ion-col size="12" class="ion-text-center ion-no-padding">
-        <ion-button
-          class="more-button"
-          (click)="openBeli()"
-          *ngIf="!beliOpen"
-          fill="clear"
-          expand="full"
-        >
+        <ion-button class="more-button" (click)="openBeli()" *ngIf="!beliOpen" size="small">
           <ion-icon slot="end" name="arrow-down"></ion-icon>
           Lebih Lagi
         </ion-button>
-        <ion-button
-          class="more-button"
-          (click)="closeBeli()"
-          *ngIf="beliOpen"
-          fill="clear"
-          expand="full"
-        >
+        <ion-button class="more-button" (click)="closeBeli()" size="small" *ngIf="beliOpen">
           <ion-icon slot="end" name="arrow-up"></ion-icon>
           Tutup
         </ion-button>
       </ion-col>
-      <ion-col class="ion-no-padding ion-padding-start" size="12">
+      <ion-col class="ion-no-padding ion-padding-top ion-padding-start" size="12">
         <ion-text color="dark">
           <h5 class="ion-no-margin">Senarai Varieti</h5>
         </ion-text>
       </ion-col>
       <ion-col size="12" class="ion-no-padding ion-padding-top">
         <ion-list class="ion-no-padding ion-no-margin">
-          <ion-item
-            detail="true"
-            lines="full"
-            text-wrap
-            (click)="viewFavs()"
-          >
+          <ion-item detail="true" lines="full" text-wrap (click)="viewFavs()">
             <ion-grid no-padding>
               <ion-row class="ion-align-items-center">
                 <ion-col size="2" class="ion-text-left">
                   <ion-badge class="badge-fav" style="padding:5px;" color="primary" mode="ios">
-                    <ion-img
-                      src="../../assets/svg/fav.svg"
-                      style="height: 30px;width:30px;color:white"
-                    ></ion-img>
+                    <ion-img class="item-badge" src="../../assets/svg/fav.svg"></ion-img>
                   </ion-badge>
                 </ion-col>
                 <ion-col size="8" class="ion-no-padding ion-padding-vertical ion-text-left">
@@ -141,10 +126,7 @@
                 <ion-row class="ion-align-items-center">
                   <ion-col size="2" class="ion-text-left">
                     <ion-badge class="badge-vege" style="padding:5px;" color="primary" mode="ios">
-                      <ion-img
-                        src="../../assets/svg/Vegetable.svg"
-                        style="height: 30px;width:30px;color:white"
-                      ></ion-img>
+                      <ion-img class="item-badge" src="../../assets/svg/Vegetable.svg"></ion-img>
                     </ion-badge>
                   </ion-col>
                   <ion-col size="8" class="ion-no-padding ion-padding-vertical ion-text-left">
@@ -167,10 +149,7 @@
                 <ion-row class="ion-align-items-center">
                   <ion-col size="2" class="ion-text-left">
                     <ion-badge class="badge-fruit" style="padding:5px;" color="primary" mode="ios">
-                      <ion-img
-                        src="../../assets/svg/Apple.svg"
-                        style="height: 30px;width:30px;color:white"
-                      ></ion-img>
+                      <ion-img class="item-badge" src="../../assets/svg/Apple.svg"></ion-img>
                     </ion-badge>
                   </ion-col>
                   <ion-col size="8" class="ion-no-padding ion-padding-vertical ion-text-left">
@@ -193,10 +172,7 @@
                 <ion-row class="ion-align-items-center">
                   <ion-col size="2" class="ion-text-left">
                     <ion-badge class="badge-cili" style="padding:5px;" color="primary" mode="ios">
-                      <ion-img
-                        src="../../assets/svg/Cili.svg"
-                        style="height: 30px;width:30px;color:white"
-                      ></ion-img>
+                      <ion-img class="item-badge" src="../../assets/svg/Cili.svg"></ion-img>
                     </ion-badge>
                   </ion-col>
                   <ion-col size="8" class="ion-no-padding ion-padding-vertical ion-text-left">

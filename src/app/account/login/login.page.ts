@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { ToastController } from "@ionic/angular";
+import { ToastController, Events } from "@ionic/angular";
 import { LocalStorageProviderService } from "src/app/providers/local-storage-provider.service";
 import { ApiProviderService } from "src/app/providers/api-provider.service";
 
@@ -18,7 +18,8 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     public toastController: ToastController,
     public apiAgro: ApiProviderService,
-    public storage: LocalStorageProviderService
+    public storage: LocalStorageProviderService,
+    private event: Events
   ) {
     this.myForm = this.formBuilder.group({
       Username: ["", Validators.required],
@@ -40,6 +41,7 @@ export class LoginPage implements OnInit {
         await this.storage.setUserId(loginResponse.data.userId);
         await this.storage.setContactId(loginResponse.data.contactId);
       }
+      this.event.publish("changeMenu", false);
       this.router.navigate(["/home"], { replaceUrl: true });
     } catch (ex) {
       var toast = this.toastController.create({

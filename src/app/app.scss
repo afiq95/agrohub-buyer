@@ -82,3 +82,15 @@ ion-card {
   background-color: rgba(255, 0, 0, 0.9);
   color: white;
 }
+
+.menu-profile {
+  --background: url("../assets/images/profilebg.png") repeat center center / cover;
+}
+
+.sub-item {
+  padding-left: 20px;
+}
+
+ion-menu-toggle > * ion-label {
+  font-family: "Open Sans Regular" !important;
+}

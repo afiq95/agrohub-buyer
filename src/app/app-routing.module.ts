@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { AuthGuardService } from "./providers/auth-guard.service";
 
 const routes: Routes = [
   {
@@ -9,7 +10,8 @@ const routes: Routes = [
   },
   {
     path: "home",
-    loadChildren: "./home/home.module#HomePageModule"
+    loadChildren: "./home/home.module#HomePageModule",
+    canActivate: [AuthGuardService]
   },
   {
     path: "list",
@@ -36,7 +38,23 @@ const routes: Routes = [
     path: "orderdetails",
     loadChildren: "./orders/orderdetails/orderdetails.module#OrderdetailsPageModule"
   },
-  { path: 'edit-profile', loadChildren: './account/edit-profile/edit-profile.module#EditProfilePageModule' }
+  {
+    path: "edit-profile",
+    loadChildren: "./account/edit-profile/edit-profile.module#EditProfilePageModule"
+  },
+  {
+    path: "orders-list",
+    loadChildren: "./orders/orders-list/orders-list.module#OrdersListPageModule"
+  },
+  {
+    path: "search-result",
+    loadChildren: "./popovers/search-result/search-result.module#SearchResultPageModule"
+  },
+  {
+    path: "notifications-list",
+    loadChildren:
+      "./notifications/notifications-list/notifications-list.module#NotificationsListPageModule"
+  }
 ];
 
 @NgModule({

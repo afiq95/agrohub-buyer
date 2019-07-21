@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { ApiProviderService } from "src/app/providers/api-provider.service";
 import { LocalStorageProviderService } from "src/app/providers/local-storage-provider.service";
 import { AlertController, ModalController, Events } from "@ionic/angular";
-import * as moment from 'moment';
+import * as moment from "moment";
 @Component({
   selector: "app-payment",
   templateUrl: "./payment.page.html",
@@ -113,8 +113,8 @@ export class PaymentPage implements OnInit {
               await this.storage.setCart([]);
               setTimeout(() => {
                 this.event.publish("cartChanges");
-              }, 1000);
-              this.router.navigate(["/tabs/home"], { replaceUrl: true });
+                this.router.navigate(["/home"], { replaceUrl: true });
+              }, 150);
             }
           }
         ]

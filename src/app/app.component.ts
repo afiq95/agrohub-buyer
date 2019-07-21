@@ -1,14 +1,18 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 
-import { Platform } from "@ionic/angular";
+import { Platform, IonMenu, Events } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { ApiProviderService } from "./providers/api-provider.service";
+import { LocalStorageProviderService } from "./providers/local-storage-provider.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-root",
   templateUrl: "app.component.html"
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  @ViewChild("menu") menu: IonMenu;
   public appPages = [
     {
       title: "Utama",
@@ -16,26 +20,30 @@ export class AppComponent {
       icon: "home"
     },
     {
+      title: "Pesanan"
+    },
+    {
       title: "Mesej",
       url: "/chat",
-      icon: "paper-plane"
+      icon: "mail"
     },
     {
       title: "Notifikasi",
-      url: "/notification",
+      url: "/notifications-list",
       icon: "information-circle"
-    },
-    {
-      title: "Akaun",
-      url: "/profile",
-      icon: "contact"
     }
   ];
-
+  disableMenu = true;
+  userInfo: any;
+  openPesanan = false;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private api: ApiProviderService,
+    private storage: LocalStorageProviderService,
+    private router: Router,
+    private event: Events
   ) {
     this.initializeApp();
   }
@@ -44,6 +52,31 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+    });
+    this.event.subscribe("changeMenu", item => {
+      console.log(item);
+      this.disableMenu = item;
+    });
+  }
+
+  async ngOnInit() {
+    this.userInfo = (await this.api.getUserContact(await this.storage.getContactId())).data;
+  }
+
+  goToPesanan(item) {
+    this.openPesanan = false;
+    this.router.navigate(["/orders-list"], {
+      state: {
+        rule: item
+      }
+    });
+  }
+
+  async logout() {
+    this.storage.clearData();
+    this.disableMenu = true;
+    this.router.navigate(["/login"], {
+      replaceUrl: true
     });
   }
 }
