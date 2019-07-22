@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ApiProviderService } from "src/app/providers/api-provider.service";
 import { LocalStorageProviderService } from "src/app/providers/local-storage-provider.service";
-import { AlertController, ModalController, Events } from "@ionic/angular";
+import { AlertController, ModalController, Events, NavController } from "@ionic/angular";
 import * as moment from "moment";
 @Component({
   selector: "app-payment",
@@ -27,7 +27,8 @@ export class PaymentPage implements OnInit {
     private formBuilder: FormBuilder,
     private alertCtrl: AlertController,
     public modalCtrl: ModalController,
-    public event: Events
+    public event: Events,
+    private navCtrl: NavController
   ) {
     this.item = this.router.getCurrentNavigation().extras.state.totalPay;
     this.detail = this.router.getCurrentNavigation().extras.state.details;
@@ -113,7 +114,7 @@ export class PaymentPage implements OnInit {
               await this.storage.setCart([]);
               setTimeout(() => {
                 this.event.publish("cartChanges");
-                this.router.navigate(["/home"], { replaceUrl: true });
+                this.navCtrl.navigateRoot("/home");
               }, 150);
             }
           }

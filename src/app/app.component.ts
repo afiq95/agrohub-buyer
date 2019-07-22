@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
       icon: "information-circle"
     }
   ];
-  disableMenu = true;
+  disableMenu = false;
   userInfo: any;
   openPesanan = false;
   constructor(
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.styleLightContent();
       this.splashScreen.hide();
     });
     this.event.subscribe("changeMenu", item => {

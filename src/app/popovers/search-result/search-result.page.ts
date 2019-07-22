@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { ApiProviderService } from "src/app/providers/api-provider.service";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
+import { IonSearchbar } from "@ionic/angular";
 
 @Component({
   selector: "app-search-result",
@@ -9,12 +10,19 @@ import { Router } from '@angular/router';
 })
 export class SearchResultPage implements OnInit {
   @Input("items") items: any[] = [];
+  @ViewChild("searchBar") searchBar: IonSearchbar;
   latestPricings: any;
   searchResult: any[];
   constructor(private api: ApiProviderService, private router: Router) {}
 
   async ngOnInit() {
     this.latestPricings = (await this.api.getItemsPricing()).data;
+  }
+
+  ionViewDidEnter() {
+    setTimeout(() => {
+      this.searchBar.setFocus();
+    }, 200);
   }
 
   search(item) {

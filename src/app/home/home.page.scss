@@ -83,7 +83,15 @@ ion-button {
   font-family: "San Francisco Light";
 }
 
-.item-badge{
-  width:30px;
-  height:30px;
+.item-badge {
+  width: 30px;
+  height: 30px;
+}
+
+.margin-varieti > ion-item > ion-badge {
+  margin: 6px 15px 6px 0px;
+}
+
+.margin-varieti > * ion-item > ion-badge {
+  margin: 6px 15px 6px 0px;
 }

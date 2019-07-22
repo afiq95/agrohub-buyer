@@ -13,6 +13,8 @@ export class VarietydetailsPage implements OnInit {
   detail: any = null;
   @ViewChild("img") img: any;
   quantity: number = 1;
+  favs: any[];
+  isFav: boolean;
   constructor(
     public router: Router,
     public storage: LocalStorageProviderService,
@@ -20,8 +22,10 @@ export class VarietydetailsPage implements OnInit {
     public toast: ToastController
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.detail = this.router.getCurrentNavigation().extras.state.detail;
+    this.favs = await this.storage.getFavItems();
+    this.isFav = this.getFavourite(this.detail);
     console.log(this.detail);
     setTimeout(() => {
       this.img.el.style.marginTop = "-5rem";
@@ -48,7 +52,26 @@ export class VarietydetailsPage implements OnInit {
     this.router.navigate(["/shoppingcart"], { replaceUrl: true });
   }
 
+  getFavourite(item) {
+    var found = this.favs.findIndex(x => {
+      return item.farmProduceId == x.id && item.grade == x.grade;
+    });
+    console.log(found);
+    if (found > -1) return true;
+    else return false;
+  }
+
   removeMore() {
     if (this.quantity > 0) this.quantity--;
+  }
+
+  async addToFav() {
+    this.isFav = true;
+    await this.storage.addFavItem(this.detail.farmProduceId, this.detail.grade);
+  }
+
+  async removeFromFav() {
+    this.isFav = false;
+    await this.storage.removeFavItem(this.detail.farmProduceId, this.detail.grade);
   }
 }

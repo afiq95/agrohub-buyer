@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { ApiProviderService } from "src/app/providers/api-provider.service";
 import { LocalStorageProviderService } from "src/app/providers/local-storage-provider.service";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
   selector: "app-varietieslist",
@@ -14,14 +15,37 @@ export class VarietieslistPage implements OnInit {
   variety: any = {};
   favs: any[] = [];
   state: any = {};
+  loading: HTMLIonLoadingElement;
   constructor(
     public router: Router,
     public api: ApiProviderService,
-    public storage: LocalStorageProviderService
+    public storage: LocalStorageProviderService,
+    private loadingController: LoadingController
   ) {}
+
+  async createLoad() {
+    this.loading = await this.loadingController.create({
+      spinner: "circles",
+      backdropDismiss: false
+    });
+  }
+
+  async PresentLoad() {
+    this.loading.present();
+  }
+
+  async DismissLoad() {
+    this.loading.dismiss();
+    this.loading = await this.loadingController.create({
+      spinner: "circles",
+      backdropDismiss: false
+    });
+  }
 
   async ngOnInit() {
     this.state = this.router.getCurrentNavigation().extras.state;
+    await this.createLoad();
+    await this.PresentLoad();
     this.favs = await this.storage.getFavItems();
     if (this.state.isFav) {
       var latest = (await this.api.getItemsPricing()).data;
@@ -53,6 +77,7 @@ export class VarietieslistPage implements OnInit {
       console.log(this.items);
       this.variety.name = this.variety.name.toLowerCase();
     }
+    await this.DismissLoad();
   }
 
   async goToDetail(item) {
