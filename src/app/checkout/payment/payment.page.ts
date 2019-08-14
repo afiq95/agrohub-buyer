@@ -114,7 +114,7 @@ export class PaymentPage implements OnInit {
               await this.storage.setCart([]);
               setTimeout(() => {
                 this.event.publish("cartChanges");
-                this.navCtrl.navigateRoot("/home");
+                this.navCtrl.navigateRoot("/tabs/home");
               }, 150);
             }
           }

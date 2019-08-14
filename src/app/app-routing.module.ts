@@ -5,14 +5,19 @@ import { AuthGuardService } from "./providers/auth-guard.service";
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "home",
-    pathMatch: "full"
-  },
-  {
-    path: "home",
-    loadChildren: "./home/home.module#HomePageModule",
+    loadChildren: "./tabs/tabs.module#TabsPageModule",
     canActivate: [AuthGuardService]
   },
+  // {
+  //   path: "tabs",
+  //   loadChildren: "./tabs/tabs.module#TabsPageModule",
+  //   canActivate: [AuthGuardService]
+  // },
+  // {
+  //   path: "home",
+  //   loadChildren: "./home/home.module#HomePageModule",
+  //   canActivate: [AuthGuardService]
+  // },
   {
     path: "list",
     loadChildren: "./list/list.module#ListPageModule"
@@ -55,6 +60,7 @@ const routes: Routes = [
     loadChildren:
       "./notifications/notifications-list/notifications-list.module#NotificationsListPageModule"
   }
+
 ];
 
 @NgModule({

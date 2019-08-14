@@ -42,7 +42,7 @@ export class LoginPage implements OnInit {
         await this.storage.setContactId(loginResponse.data.contactId);
       }
       this.event.publish("changeMenu", false);
-      this.router.navigate(["/home"], { replaceUrl: true });
+      this.router.navigate(["/tabs/home"], { replaceUrl: true });
     } catch (ex) {
       var toast = this.toastController.create({
         message: "Salah login",
