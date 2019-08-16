@@ -22,15 +22,6 @@ const routes: Routes = [
         ]
       },
       {
-        path: "message",
-        children: [
-          {
-            path: "",
-            loadChildren: "../mail"
-          }
-        ]
-      },
-      {
         path: "profile",
         children: [
           {

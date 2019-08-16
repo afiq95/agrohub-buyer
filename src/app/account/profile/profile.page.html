@@ -76,7 +76,9 @@
             slot="start"
             name="checkmark-circle-outline"
             color="success"
-            *ngIf="item.status == 'Completed' || item.status == 'Closed'"
+            *ngIf="
+              item.status == 'Completed' || item.status == 'Closed' || item.status == 'Accepted'
+            "
           ></ion-icon>
           <ion-icon
             slot="start"
@@ -112,7 +114,11 @@
               >
                 Dalam Proses
               </ion-badge>
-              <ion-badge color="success" *ngIf="item.status == 'Completed'" mode="ios">
+              <ion-badge
+                color="success"
+                *ngIf="item.status == 'Completed' || item.status == 'Accepted'"
+                mode="ios"
+              >
                 Selesai
               </ion-badge>
               <ion-badge color="danger" *ngIf="item.status == 'Rejected'" mode="ios">
