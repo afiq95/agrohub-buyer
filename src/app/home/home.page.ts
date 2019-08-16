@@ -11,7 +11,7 @@ import { LoadingService } from "../providers/loading.service";
   templateUrl: "home.page.html",
   styleUrls: ["home.page.scss"]
 })
-export class HomePage implements OnInit {
+export class HomePage {
   items: any[];
   itemInCart: any;
   belian: any[] = [];
@@ -29,17 +29,17 @@ export class HomePage implements OnInit {
     public loadProvider: LoadingService
   ) {}
 
-  async ngOnInit() {
+  async ionViewWillEnter() {
     this.loadProvider.CreateAndPresent();
     this.event.publish("changeMenu", false);
     this.items = (await this.api.getTypeOfProduce()).data;
     this.favs = await this.storage.getFavItems();
     this.itemInCart = (await this.storage.getFromCart()).length;
-    this.belian = (await this.api.getOrderHistory(await this.storage.getContactId())).data.filter(
-      x => {
-        return x.status == "New";
-      }
-    );
+    this.belian = (await this.api.getOrderHistory(
+      await this.storage.getContactId()
+    )).data.filter(x => {
+      return x.status == "New";
+    });
     this.belian = this.belian.reverse();
     this.belianInit = this.belian[0];
     if (this.belian.length > 1) {
@@ -70,7 +70,7 @@ export class HomePage implements OnInit {
   }
 
   goToCart() {
-    this.router.navigate(["/shoppingcart"]);
+    this.router.navigate(["/shoppingcart"], { replaceUrl: true } );
   }
 
   openBeli() {
